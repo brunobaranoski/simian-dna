@@ -39,3 +39,7 @@
 
 # debug information files
 *.dwo
+
+# Node
+node_modules/
+.env

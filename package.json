@@ -1,0 +1,29 @@
+{
+  "name": "simian-dna",
+  "version": "1.0.0",
+  "description": "Simian DNA detection algorithm and API challenge",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunobaranoski/simian-dna.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brunobaranoski/simian-dna/issues"
+  },
+  "homepage": "https://github.com/brunobaranoski/simian-dna#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
