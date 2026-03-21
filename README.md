@@ -24,6 +24,28 @@ g++ src/main.cpp src/simian.cpp -o simian
 g++ tests/simian_test.cpp src/simian.cpp -o simian_test
 ./simian_test
 ```
+## Nível 2 — API REST em Node.js
+
+### Pré-requisitos
+- Node.js v22+
+- npm v10+
+
+### Como rodar localmente
+```bash
+npm install
+npm run dev
+```
+
+### Endpoint
+
+**POST /simian**
+```json
+{
+  "dna": ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]
+}
+```
+
+Retorna `200 OK` se símio, `403 Forbidden` se humano.
 
 ## Níveis
 - [x] Nível 1 — Algoritmo em C++
