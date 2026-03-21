@@ -1,13 +1,17 @@
-#include <iostream>
+#include <stdexcept>
 #include "simian.h"
 
 bool isSimian(const std::vector<std::string> &dna){
+    //Valida o DNA
+    if(!isValidDNA(dna)) throw std::invalid_argument("DNA invalido");
+
     //early return: para na primeira sequência encontrada
     if(checkSequence(dna, 0, 1))  return true;
     if(checkSequence(dna, 1, 0))  return true;
     if(checkSequence(dna, 1, 1))  return true;
     if(checkSequence(dna, 1, -1)) return true;
     
+    // Nenhuma sequência encontrada, DNA é humano
     return false;
 }
 
@@ -39,4 +43,27 @@ bool checkSequence(const std::vector<std::string> &dna, int di, int dj){
     }
 
     return false;
+}
+
+bool isValidDNA(const std::vector<std::string> &dna){
+    // Rejeita array vazio
+    if(dna.empty()) return false;
+    int n = dna.size();
+
+    for(int i = 0; i < n; i++){
+        // Verifica se a matriz é quadrada (NxN)
+        if(dna[i].size() != n){
+            return false;
+        }
+
+        for(int j = 0; j < n; j++){
+            char c = dna[i][j];
+            // Verifica se o caractere é uma base nitrogenada válida
+            if(c != 'A' && c != 'T' && c != 'C' && c != 'G'){
+                return false;
+            }
+        }
+    }
+
+    return true;
 }

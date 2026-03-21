@@ -7,3 +7,8 @@ add_executable(simian
     src/main.cpp
     src/simian.cpp
 )
+
+add_executable(simian_test
+    tests/simian_test.cpp
+    src/simian.cpp
+)
