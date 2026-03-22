@@ -26,6 +26,16 @@ async function saveDNA(dna, isSimian) {
     );
 }
 
+// Verifica se o DNA já não existe no banco
+async function findDNA(dna) {
+    const dnaString = dna.join(',');
+    const result = await pool.query(
+        'SELECT is_simian FROM dna_checks WHERE dna = $1',
+        [dnaString]
+    );
+    return result.rows[0] || null;
+}
+
 // Retorna as estatísticas
 async function getStats() {
     const result = await pool.query(`
@@ -43,4 +53,4 @@ async function getStats() {
     return { count_mutant_dna: simians, count_human_dna: humans, ratio };
 }
 
-module.exports = { initDB, saveDNA, getStats };
+module.exports = { initDB, saveDNA, findDNA, getStats };

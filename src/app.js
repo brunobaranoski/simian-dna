@@ -1,6 +1,6 @@
 const express = require('express');
 const { isSimian } = require('./simian');
-const { initDB, saveDNA, getStats } = require('./database');
+const { initDB, saveDNA, findDNA, getStats } = require('./database');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -52,14 +52,16 @@ app.post('/simian', async (req, res) => {
     }
 
     try {
-        const result = isSimian(dna);
-        await saveDNA(dna, result);
+        // Verifica se o DNA já existe no banco
+        const existing = await findDNA(dna);
+        const result = existing ? existing.is_simian : isSimian(dna);
 
-        if (result) {
-            res.status(200).json({ message: 'DNA simio' });
-        } else {
-            res.status(403).json({ message: 'DNA humano' });
-        }
+        if (!existing) await saveDNA(dna, result);
+
+        return result
+            ? res.status(200).json({ message: 'DNA simio' })
+            : res.status(403).json({ message: 'DNA humano' });
+
     } catch (e) {
         res.status(400).json({ message: e.message });
     }
