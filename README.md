@@ -41,6 +41,10 @@ npm install
 npm run dev
 ```
 
+### Documentação
+Acesse a documentação interativa via Swagger em:
+http://localhost:3000/api-docs
+
 ### Endpoint
 
 **POST /simian**
@@ -55,14 +59,13 @@ Retorna `200 OK` se símio, `403 Forbidden` se humano.
 ### Testando a API
 ```bash
 # DNA símio — esperado: 200 OK
-curl -i -X POST https://simian-dna-production.up.railway.app/simian \
-  -H "Content-Type: application/json" \
-  -d "{\"dna\": [\"CTGAGA\", \"CTGAGC\", \"TATTGT\", \"AGAGGG\", \"CCCCTA\", \"TCACTG\"]}"
+curl -i -X POST https://simian-dna-production.up.railway.app/simian -H "Content-Type: application/json" -d "{\"dna\": [\"CTGAGA\", \"CTGAGC\", \"TATTGT\", \"AGAGGG\", \"CCCCTA\", \"TCACTG\"]}"
 
 # DNA humano — esperado: 403 Forbidden
-curl -i -X POST https://simian-dna-production.up.railway.app/simian \
-  -H "Content-Type: application/json" \
-  -d "{\"dna\": [\"ATGCGA\", \"CAGTGC\", \"TTATTT\", \"AGACGG\", \"GCGTCA\", \"TCACTG\"]}"
+curl -i -X POST https://simian-dna-production.up.railway.app/simian -H "Content-Type: application/json" -d "{\"dna\": [\"ATGCGA\", \"CAGTGC\", \"TTATTT\", \"AGACGG\", \"GCGTCA\", \"TCACTG\"]}"
+
+# DNA inválido — esperado: 400 Bad Request
+curl -i -X POST https://simian-dna-production.up.railway.app/simian -H "Content-Type: application/json" -d "{\"dna\": [\"ATGCGA\", \"CAGTGC\", \"TTATXX\", \"AGACGG\", \"GCGTCA\", \"TCACTG\"]}"
 ```
 
 ## Níveis
