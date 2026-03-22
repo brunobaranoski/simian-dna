@@ -1,31 +1,48 @@
 # simian-dna
 Simian DNA detection algorithm and API challenge
 
-Detecta se uma sequência de DNA pertence a um símio ou humano.
+Aplicação que detecta se uma sequência de DNA pertence a um símio ou humano.
 
 Um DNA é considerado símio se contiver uma ou mais sequências de 4 letras 
 iguais consecutivas nas direções horizontal, vertical ou diagonal.
 
-## Nível 1 — Algoritmo em C++
+## Algoritmo em C++
 
 ### Pré-requisitos
 - g++ com suporte a C++17
 
 ### Como compilar e rodar
+> Execute os comandos abaixo no terminal, na raiz do projeto.
 
 #### Programa principal
+
+**Compilar:**
 ```bash
 g++ src/main.cpp src/simian.cpp -o simian
-./simian
+```
+
+**Executar:**
+```bash
+simian        # Windows (PowerShell/CMD)
+./simian      # Linux/Mac/Git Bash
 ```
 
 #### Testes
+
+**Compilar:**
 ```bash
 g++ tests/simian_test.cpp src/simian.cpp -o simian_test
-./simian_test
 ```
 
-## Nível 2 — API REST em Node.js
+**Executar:**
+```bash
+simian_test   # Windows (PowerShell/CMD)
+./simian_test # Linux/Mac/Git Bash
+```
+
+## API REST em Node.js
+
+API REST desenvolvida em Node.js com Express, hospedada no Railway.
 
 ### URL pública
 https://simian-dna-production.up.railway.app
@@ -37,14 +54,15 @@ https://simian-dna-production.up.railway.app
 - npm v10+
 
 ### Como rodar localmente
+> Execute os comandos abaixo no terminal, na raiz do projeto.
 ```bash
 npm install
 npm run dev
 ```
 
-### Documentação
-Acesse a documentação interativa via Swagger em:
-http://localhost:3000/api-docs
+### Documentação Swagger
+- Local: http://localhost:3000/api-docs
+- Cloud: https://simian-dna-production.up.railway.app/api-docs
 
 ### Endpoints
 
@@ -54,7 +72,7 @@ http://localhost:3000/api-docs
   "dna": ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]
 }
 ```
-Retorna `200 OK` se símio, `403 Forbidden` se humano.
+Retorna `200 OK` se símio, `403 Forbidden` se humano, `400 Bad Request` se DNA inválido.
 
 **GET /stats**
 
@@ -78,7 +96,6 @@ curl -i -X POST https://simian-dna-production.up.railway.app/simian -H "Content-
 curl -i https://simian-dna-production.up.railway.app/stats
 ```
 
-## Níveis
-- [x] Nível 1 — Algoritmo em C++
-- [x] Nível 2 — API REST em Node.js
-- [x] Nível 3 — Banco de dados e stats
+## Banco de dados
+
+Banco de dados PostgreSQL hospedado no Railway, integrado à API. Garante unicidade dos DNAs verificados e cada DNA é armazenado apenas uma vez.
