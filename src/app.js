@@ -1,14 +1,22 @@
 const express = require('express');
 const { isSimian } = require('./simian');
+const { initDB, saveDNA, getStats } = require('./database');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+
 const app = express();
 app.use(express.json()); // permite receber JSON no body
 
 const PORT = 3000;
 
-// POST /simian - recebe array de DNA e retorna 200 se símio, 403 se humano
+// Inicializa o banco de dados
+initDB().then(() => {
+    console.log('Banco de dados inicializado');
+}).catch(err => {
+    console.error('Erro ao inicializar banco de dados:', err);
+});
+
 /**
  * @swagger
  * /simian:
@@ -35,7 +43,7 @@ const PORT = 3000;
  *       400:
  *         description: DNA inválido ou formato incorreto
  */
-app.post('/simian', (req, res) => {
+app.post('/simian', async (req, res) => {
     const { dna } = req.body;
 
     // Valida se o body contém um array de strings
@@ -45,6 +53,8 @@ app.post('/simian', (req, res) => {
 
     try {
         const result = isSimian(dna);
+        await saveDNA(dna, result);
+
         if (result) {
             res.status(200).json({ message: 'DNA simio' });
         } else {
@@ -52,6 +62,24 @@ app.post('/simian', (req, res) => {
         }
     } catch (e) {
         res.status(400).json({ message: e.message });
+    }
+});
+
+/**
+ * @swagger
+ * /stats:
+ *   get:
+ *     summary: Retorna estatísticas dos DNAs verificados
+ *     responses:
+ *       200:
+ *         description: Estatísticas de DNAs símios e humanos
+ */
+app.get('/stats', async (req, res) => {
+    try {
+        const stats = await getStats();
+        res.status(200).json(stats);
+    } catch (e) {
+        res.status(500).json({ message: e.message });
     }
 });
 

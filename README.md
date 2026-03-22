@@ -24,6 +24,7 @@ g++ src/main.cpp src/simian.cpp -o simian
 g++ tests/simian_test.cpp src/simian.cpp -o simian_test
 ./simian_test
 ```
+
 ## Nível 2 — API REST em Node.js
 
 ### URL pública
@@ -45,7 +46,7 @@ npm run dev
 Acesse a documentação interativa via Swagger em:
 http://localhost:3000/api-docs
 
-### Endpoint
+### Endpoints
 
 **POST /simian**
 ```json
@@ -53,8 +54,14 @@ http://localhost:3000/api-docs
   "dna": ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]
 }
 ```
-
 Retorna `200 OK` se símio, `403 Forbidden` se humano.
+
+**GET /stats**
+
+Retorna estatísticas dos DNAs verificados:
+```json
+{"count_mutant_dna": 1, "count_human_dna": 1, "ratio": 1}
+```
 
 ### Testando a API
 ```bash
@@ -66,9 +73,12 @@ curl -i -X POST https://simian-dna-production.up.railway.app/simian -H "Content-
 
 # DNA inválido — esperado: 400 Bad Request
 curl -i -X POST https://simian-dna-production.up.railway.app/simian -H "Content-Type: application/json" -d "{\"dna\": [\"ATGCGA\", \"CAGTGC\", \"TTATXX\", \"AGACGG\", \"GCGTCA\", \"TCACTG\"]}"
+
+# Stats — esperado: 200 OK
+curl -i https://simian-dna-production.up.railway.app/stats
 ```
 
 ## Níveis
 - [x] Nível 1 — Algoritmo em C++
 - [x] Nível 2 — API REST em Node.js
-- [ ] Nível 3 — Banco de dados e stats
+- [x] Nível 3 — Banco de dados e stats
