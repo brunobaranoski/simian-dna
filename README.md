@@ -26,6 +26,11 @@ g++ tests/simian_test.cpp src/simian.cpp -o simian_test
 ```
 ## Nível 2 — API REST em Node.js
 
+### URL pública
+https://simian-dna-production.up.railway.app
+
+> **Nota:** a API está hospedada no plano gratuito do Railway e pode demorar alguns segundos para responder na primeira requisição.
+
 ### Pré-requisitos
 - Node.js v22+
 - npm v10+
@@ -47,7 +52,20 @@ npm run dev
 
 Retorna `200 OK` se símio, `403 Forbidden` se humano.
 
+### Testando a API
+```bash
+# DNA símio — esperado: 200 OK
+curl -i -X POST https://simian-dna-production.up.railway.app/simian \
+  -H "Content-Type: application/json" \
+  -d "{\"dna\": [\"CTGAGA\", \"CTGAGC\", \"TATTGT\", \"AGAGGG\", \"CCCCTA\", \"TCACTG\"]}"
+
+# DNA humano — esperado: 403 Forbidden
+curl -i -X POST https://simian-dna-production.up.railway.app/simian \
+  -H "Content-Type: application/json" \
+  -d "{\"dna\": [\"ATGCGA\", \"CAGTGC\", \"TTATTT\", \"AGACGG\", \"GCGTCA\", \"TCACTG\"]}"
+```
+
 ## Níveis
 - [x] Nível 1 — Algoritmo em C++
-- [ ] Nível 2 — API REST em Node.js
+- [x] Nível 2 — API REST em Node.js
 - [ ] Nível 3 — Banco de dados e stats
