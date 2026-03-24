@@ -3,8 +3,25 @@ Simian DNA detection algorithm and API challenge
 
 Aplicação que detecta se uma sequência de DNA pertence a um símio ou humano.
 
-Um DNA é considerado símio se contiver uma ou mais sequências de 4 letras 
-iguais consecutivas nas direções horizontal, vertical ou diagonal.
+O sistema analisa uma matriz NxN contendo bases nitrogenadas (A, T, C, G) e determina se pertence a um símio ao encontrar uma ou mais sequências de quatro letras iguais nas direções horizontal, vertical ou diagonal.
+
+## Tecnologias utilizadas
+
+- C++17
+- Node.js
+- Express
+- PostgreSQL
+- Swagger
+- Railway
+
+## Arquitetura
+
+O projeto foi dividido em duas partes:
+
+- **C++**: implementação do algoritmo principal (`isSimian`), com foco em performance e testes
+- **Node.js**: API REST responsável por receber requisições HTTP e retornar os resultados
+
+> A lógica do algoritmo foi replicada em JavaScript para uso na API.
 
 ## Algoritmo em C++
 
@@ -40,6 +57,8 @@ simian_test   # Windows (PowerShell/CMD)
 ./simian_test # Linux/Mac/Git Bash
 ```
 
+![Testes passando](screenshots/testes.png)
+
 ## API REST em Node.js
 
 API REST desenvolvida em Node.js com Express, hospedada no Railway.
@@ -63,6 +82,8 @@ npm run dev
 ### Documentação Swagger
 - Local: http://localhost:3000/api-docs
 - Cloud: https://simian-dna-production.up.railway.app/api-docs
+
+![Swagger](screenshots/swagger.png)
 
 ### Endpoints
 
@@ -99,3 +120,5 @@ curl -i https://simian-dna-production.up.railway.app/stats
 ## Banco de dados
 
 Banco de dados PostgreSQL hospedado no Railway, integrado à API. Garante unicidade dos DNAs verificados e cada DNA é armazenado apenas uma vez.
+
+![Banco de dados](screenshots/banco.png)
